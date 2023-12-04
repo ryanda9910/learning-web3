@@ -1,29 +1,14 @@
-const main = async () => {
-  const [deployer] = await hre.ethers.getSigners();
-  const accountBalance = await deployer.getBalance();
-
-  console.log("Deploying contracts with account: ", deployer.address);
-  console.log("Account balance: ", accountBalance.toString());
-
-  const learningContractFactory = await hre.ethers.getContractFactory(
-    "Learning"
-  );
-  const learningContract = await learningContractFactory.deploy({
-    value: hre.ethers.utils.parseEther("0.001"),
-  });
-  await waveContract.deployed();
-
-  console.log("LearningPortal address: ", learningContract.address);
-};
-
-const runMain = async () => {
-  try {
-    await main();
-    process.exit(0);
-  } catch (error) {
-    console.log(error);
+// deploy Counter contract
+const hre = require("hardhat");
+async function main() {
+  const Counter = await hre.ethers.getContractFactory("Counter");
+  const counter = await Counter.deploy();
+  await counter.deployed();
+  console.log("Counter deployed to:", counter.address);
+}
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error);
     process.exit(1);
-  }
-};
-
-runMain();
+  });
